@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Search Web</title>
+</head>
+<body>
+
+<h1>Search Web - </h1>
+
+<form th:action="@{/sign-in}" method="post">
+    name: <input type="text" name="username" id="username"
+                 th:value="${username}"/><br/>
+    p w: <input type="password" name="password" id="password"/><br/>
+    <div th:if="${logout}">You have been logged out successfully</div>
+    <input type="submit" value="sign in"/>
+</form>
+<a href="/sign-up">Sign-up</a>
+</body>
+</html>

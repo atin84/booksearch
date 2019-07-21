@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <script src="/webjars/jquery/3.2.1/dist/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.3.1/dist/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8"/>
+    <title>Main</title>
+    <script type="text/javascript" th:inline="javascript">
+        /* <![CDATA[ */
+		$(function() {
+			$("#btn-logout").click(function() {
+				alert();
+				$("#form-logout")[0].submit();
+			});
+		});
+		/* ]]> */
+    </script>
+</head>
+
+<span sec:authentication="principal.username"></span>
+
+책 검색 | 내 검색 히스토리 | 인기 키워드 목록 | <a href="javascript:logout2()">로그아웃</a> | <button id="btn-logout">Logout</button>
+<hr/>
+
+<form th:action="@{/main}" method="post">
+
+    <input type="text"/>
+
+    <input type="submit" value="search"/>
+</form>
+
+<form id="form-logout" th:action="@{/logout}" method="post">
+</form>
+
+</body>
+</html>
