@@ -12,14 +12,14 @@
 				ordering: false,
 				info: false,
 				ajax: {
-					url: "/api/v1/histories",
+					url: "/api/v1/ranking",
 					dataSrc: function (json) {
 						return json;
 					}
 				},
 				columns: [
 					{data: "keyword"},
-					{data: "searchTime"}
+					{data: "count"}
 				]
 			});
 		});
@@ -32,8 +32,8 @@
 <table id="history" class="display table table-striped table-bordered table-hover">
     <thead>
     <tr>
-        <th>제목</th>
-        <th>검색 시간</th>
+        <th>Keyword</th>
+        <th>Count</th>
     </tr>
     </thead>
 </table>

@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import retrofit2.Response;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,7 +23,7 @@ public class KakaoApiServiceTest {
 		String query = "미움받을 용기";
 
 		// when
-		Response<BookDto> book =  kakaoApiService.getBooks(query, 1, 10).execute();
+		Response<BookDto> book = kakaoApiService.getBooks(query, 1, 10).execute();
 
 		// then
 		assertTrue(book.isSuccessful());

@@ -19,16 +19,13 @@ public class BookSearchHistoryService {
 
 	private final BookSearchHistoryRepository bookSearchHistoryRepository;
 
-	public BookSearchHistory fetchBookSearchHistory(String id) {
+	public Set<BookSearchValue> fetchBookSearchHistory(String id) {
 		Optional<BookSearchHistory> bookSearchHistoryOptional = bookSearchHistoryRepository.findById(id);
 
 		if (!bookSearchHistoryOptional.isPresent()) {
-			BookSearchHistory bookSearchHistory = new BookSearchHistory();
-			bookSearchHistory.setId(id);
-			bookSearchHistory.setBookSearchHistorySet(Collections.emptySet());
-			return bookSearchHistory;
+			return Collections.emptySet();
 		}
-		return bookSearchHistoryOptional.get();
+		return bookSearchHistoryOptional.get().getBookSearchHistorySet();
 	}
 
 	public void addBookSearchHistory(String id, BookSearchValue bookSearchValue) {

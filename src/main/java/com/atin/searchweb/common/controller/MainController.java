@@ -9,7 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
 	@RequestMapping(value = "/main")
-	public String main(String title, Integer pageNumber) {
+	public String main() {
 		return "main";
+	}
+
+	@RequestMapping(value = "/history")
+	public String history() {
+		return "history";
+	}
+
+	@RequestMapping(value = "/ranking")
+	public String ranking() {
+		return "ranking";
 	}
 }

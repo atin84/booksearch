@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class SearchRequestDto {
+public class BookSearchRequestDto {
 
 	@NotBlank
 	private String title;

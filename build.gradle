@@ -54,6 +54,9 @@ dependencies {
 	compile 'org.webjars.bower:bootstrap:4.3.1'
 	compile group: 'org.webjars', name: 'datatables', version: '1.10.19'
 
+	//
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
+	
 	// DB and nosql
 	compile group: 'com.h2database', name: 'h2', version: "${version.h2}"
 	compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'

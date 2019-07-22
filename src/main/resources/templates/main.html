@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="header"></th:block>
 
@@ -9,26 +8,18 @@
 		/* <![CDATA[ */
 		function formatDetatilInfo(d) {
 			return 'Title : ' + d.title + '<br />' +
-                '<img src=\"' + d.thumbnail + '\" /><br />' +
+				'<img src=\"' + d.thumbnail + '\" /><br />' +
 				'Contents : ' + d.contents + '<br />' +
 				'ISBN : ' + d.isbn + '<br />' +
 				'Authors : ' + d.authors + '<br />' +
 				'Publisher : ' + d.publisher + '<br />' +
 				'Datetime : ' + d.datetime + '<br />' +
 				'Price : ' + d.price + '<br />' +
-			    'Sale price : ' + d.sale_price;
+				'Sale price : ' + d.sale_price;
 		}
 
 		$(function () {
-			$("#btn-logout").click(function () {
-				$("#form-logout")[0].submit();
-			});
-
-			$("#btn-search").click(function () {
-				$("#form-search")[0].submit();
-			});
-
-			var dt = $('#example').DataTable({
+			var dt = $('#book').DataTable({
 				processing: true,
 				serverSide: true,
 				paging: true,
@@ -47,11 +38,11 @@
 				bPaginate: true,
 				columns: [
 					{
-						class:          "details-control",
-						orderable:      false,
+						class: "details-control",
+						orderable: false,
 						defaultContent: "",
 						data: "title"
-                    },
+					},
 					{data: "isbn"},
 					{data: "datetime"}
 				]
@@ -97,7 +88,7 @@
 책 검색 후 책 제목을 누르면 상세 정보를 볼 수 있습니다.
 <hr/>
 
-<table id="example" class="display table table-striped table-bordered table-hover" style="width:100%">
+<table id="book" class="display table table-striped table-bordered table-hover" style="width:100%">
     <thead>
     <tr>
         <th>제목</th>

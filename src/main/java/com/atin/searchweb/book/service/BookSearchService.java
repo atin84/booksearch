@@ -3,7 +3,8 @@ package com.atin.searchweb.book.service;
 import com.atin.searchweb.book.domain.BookSearchValue;
 import com.atin.searchweb.book.dto.BookDocumentDto;
 import com.atin.searchweb.book.dto.BookDto;
-import com.atin.searchweb.book.dto.SearchRequestDto;
+import com.atin.searchweb.book.dto.BookSearchRequestDto;
+import com.atin.searchweb.ranking.service.BookRankingService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
@@ -25,18 +26,20 @@ public class BookSearchService {
 
 	private final BookSearchHistoryService bookSearchHistoryService;
 
-	public Page<BookDocumentDto> fetchBooks(SearchRequestDto searchRequestDto) {
-		bookSearchHistoryService.addBookSearchHistory(searchRequestDto.getId(), BookSearchValue.builder().searchTime(LocalDateTime.now()).keyword(searchRequestDto.getTitle()).build());
+	private final BookRankingService bookRankingRepository;
 
-		//
-		Pageable pageable = new PageRequest(searchRequestDto.getPage() - 1, searchRequestDto.getSize());
-		if (StringUtils.isBlank(searchRequestDto.getTitle())) {
+	public Page<BookDocumentDto> searchBooks(BookSearchRequestDto bookSearchRequestDto) {
+		Pageable pageable = new PageRequest(bookSearchRequestDto.getPage() - 1, bookSearchRequestDto.getSize());
+		if (StringUtils.isBlank(bookSearchRequestDto.getTitle())) {
 			return new PageImpl<>(Collections.emptyList(), pageable, 0);
 		}
 
+		bookSearchHistoryService.addBookSearchHistory(bookSearchRequestDto.getId(), BookSearchValue.builder().searchTime(LocalDateTime.now()).keyword(bookSearchRequestDto.getTitle()).build());
+		bookRankingRepository.incrementBookSearchScore(bookSearchRequestDto.getTitle());
+
 		Response<BookDto> response;
 		try {
-			response = kakaoApiService.getBooks(searchRequestDto.getTitle(), searchRequestDto.getPage(), searchRequestDto.getSize()).execute();
+			response = kakaoApiService.getBooks(bookSearchRequestDto.getTitle(), bookSearchRequestDto.getPage(), bookSearchRequestDto.getSize()).execute();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

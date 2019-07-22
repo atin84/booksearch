@@ -1,22 +1,27 @@
 package com.atin.searchweb.book.controller;
 
-import com.atin.searchweb.book.domain.BookSearchHistory;
 import com.atin.searchweb.book.dto.BookDocumentDto;
-import com.atin.searchweb.book.dto.SearchRequestDto;
+import com.atin.searchweb.book.dto.BookSearchValueDto;
+import com.atin.searchweb.book.dto.BookSearchRequestDto;
 import com.atin.searchweb.book.service.BookSearchHistoryService;
 import com.atin.searchweb.book.service.BookSearchService;
+import com.atin.searchweb.ranking.service.BookRankingService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+@RequestMapping("/api/v1")
 @Controller
 @RequiredArgsConstructor
 public class BookSearchController {
@@ -25,46 +30,39 @@ public class BookSearchController {
 
 	private final BookSearchHistoryService bookSearchHistoryService;
 
-	/*@GetMapping("/book-search")
-	public String searchBook(Model model, SearchRequestDto searchRequestDto, Pageable pageable) {
+	private final BookRankingService bookRankingRepository;
 
-		Page<BookDocumentDto> bookPage = bookSearchService.fetchBooks(searchRequestDto, pageable);
+	private final ModelMapper modelMapper;
 
-		model.addAttribute("searchRequest", searchRequestDto);
-		model.addAttribute("bookPage", bookSearchService.fetchBooks(searchRequestDto, pageable));
-
-		int totalPages = bookPage.getTotalPages();
-		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-					.boxed()
-					.collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-
-		return "main";
-	}*/
-
-	@GetMapping("/api/v1/books")
+	@GetMapping("/books")
 	@ResponseBody
 	public Page<BookDocumentDto> searchBook(@RequestParam("search[value]") String searchValue,
 											@RequestParam(value = "start", defaultValue = "0") int start,
 											@RequestParam(value = "length", defaultValue = "10") int length,
-											HttpServletRequest request) {
+											Principal principal) {
 
-		SearchRequestDto searchRequestDto = new SearchRequestDto();
-		searchRequestDto.setTitle(searchValue);
-		searchRequestDto.setSize(length);
-		searchRequestDto.setPage((start / length) + 1);
-		searchRequestDto.setId(((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+		BookSearchRequestDto bookSearchRequestDto = new BookSearchRequestDto();
+		bookSearchRequestDto.setTitle(searchValue);
+		bookSearchRequestDto.setSize(length);
+		bookSearchRequestDto.setPage((start / length) + 1);
+		bookSearchRequestDto.setId(principal.getName());
 
-		return bookSearchService.fetchBooks(searchRequestDto);
+		return bookSearchService.searchBooks(bookSearchRequestDto);
 	}
 
-	@GetMapping("/api/v1/histories")
+	@GetMapping("/histories")
 	@ResponseBody
-	public BookSearchHistory getHistories(Principal principal) {
-		principal.getName();
-		String id = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-		return bookSearchHistoryService.fetchBookSearchHistory(id);
+	public List<BookSearchValueDto> getHistories(Principal principal) {
+		List<BookSearchValueDto> bookSearchValueList = bookSearchHistoryService.fetchBookSearchHistory(principal.getName())
+				.stream()
+				.map(v -> modelMapper.map(v, BookSearchValueDto.class))
+				.collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
+					Collections.reverse(list);
+					return list;
+				}));
+
+		return bookSearchValueList;
 	}
+
+
 }

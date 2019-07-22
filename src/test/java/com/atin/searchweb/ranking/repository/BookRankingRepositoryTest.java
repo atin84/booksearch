@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class BookRankingRepositoryTest {
 
-	@Autowired
+	/*@Autowired
 	private BookRankingRepository bookRankingRepository;
 
 	@Test
@@ -36,5 +36,5 @@ public class BookRankingRepositoryTest {
 		BookRanking bookRanking = bookRankingRepository.findById(id).get();
 		assertEquals(1000L, bookRanking.getAmount().longValue());
 		assertEquals(bookRanking.getRefreshTime(), refreshTime);
-	}
+	}*/
 }

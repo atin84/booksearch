@@ -7,9 +7,9 @@
     <meta charset="UTF-8"/>
     <title>Main</title>
     <script type="text/javascript" th:inline="javascript">
-        /* <![CDATA[ */
-		$(function() {
-			$("#btn-logout").click(function() {
+		/* <![CDATA[ */
+		$(function () {
+			$("#btn-logout").click(function () {
 				alert();
 				$("#form-logout")[0].submit();
 			});
@@ -20,7 +20,8 @@
 
 <span sec:authentication="principal.username"></span>
 
-책 검색 | 내 검색 히스토리 | 인기 키워드 목록 | <a href="javascript:logout2()">로그아웃</a> | <button id="btn-logout">Logout</button>
+책 검색 | 내 검색 히스토리 | 인기 키워드 목록 | <a href="javascript:logout2()">로그아웃</a> |
+<button id="btn-logout">Logout</button>
 <hr/>
 
 <form th:action="@{/main}" method="post">

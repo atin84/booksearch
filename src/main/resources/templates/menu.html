@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+>
 <head>
     <script type="text/javascript" th:inline="javascript">
 		/* <![CDATA[ */
@@ -14,12 +14,14 @@
 </head>
 
 <a href="/main" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;책 검색</a>
-|
-<a href="/main" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;내 검색 히스토리</a>
-|
-<a href="/main" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;인기 키워드 목록</a>
-|
-<a href="/main" class="btn btn-success" id="btn-logout"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Logout</a>
+&nbsp;|&nbsp;
+<a href="/history" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;내 검색 히스토리</a>
+&nbsp;|&nbsp;
+<a href="/ranking" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>인기 키워드 목록</a>
+&nbsp;|&nbsp;
+<a href="#" class="btn btn-success" id="btn-logout"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Logout</a>
+
+<hr/>
 
 <form id="form-logout" th:action="@{/logout}" method="post">
 </form>
