@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class BookDocumentDto {
+public class KakaoBookDto {
 	// 도서 제목
 	@JsonProperty("title")
 	private String title;
@@ -48,8 +48,8 @@ public class BookDocumentDto {
 	private Integer price;
 
 	// 도서 판매가
-	@JsonProperty("salePrice")
-	private Integer sale_price;
+	@JsonProperty("sale_price")
+	private Integer salePrice;
 
 	// 도서 표지 썸네일 URL
 	@JsonProperty("thumbnail")

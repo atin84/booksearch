@@ -8,40 +8,34 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BookDto {
+public class NaverBookDto {
 	@JsonProperty("title")
 	private String title;
 
-	@JsonProperty("contents")
+	@JsonProperty("description")
 	private String contents;
 
-	@JsonProperty("url")
+	@JsonProperty("link")
 	private String url;
 
 	@JsonProperty("isbn")
 	private String isbn;
 
-	@JsonProperty("datetime")
+	@JsonProperty("pubdate")
 	private String datetime;
 
-	@JsonProperty("authors")
+	@JsonProperty("author")
 	private String authors;
 
 	@JsonProperty("publisher")
 	private String publisher;
 
-	@JsonProperty("translators")
-	private String translators;
-
 	@JsonProperty("price")
 	private Integer price;
 
-	@JsonProperty("salePrice")
+	@JsonProperty("discount")
 	private Integer salePrice;
 
-	@JsonProperty("thumbnail")
+	@JsonProperty("image")
 	private String thumbnail;
-
-	@JsonProperty("status")
-	private String status;
 }

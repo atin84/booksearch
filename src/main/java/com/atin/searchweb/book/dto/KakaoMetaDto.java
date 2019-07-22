@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MetaDto {
+public class KakaoMetaDto {
 
 	// 전체 검색된 문서수
 	@JsonProperty("total_count")

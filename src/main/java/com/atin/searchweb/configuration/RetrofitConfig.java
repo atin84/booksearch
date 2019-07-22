@@ -1,6 +1,7 @@
 package com.atin.searchweb.configuration;
 
 import com.atin.searchweb.book.service.KakaoApiService;
+import com.atin.searchweb.book.service.NaverApiService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -19,15 +20,28 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitConfig {
 
 	@Autowired
-	private Interceptor KakaoHttpInterceptor;
+	private Interceptor kakaoHttpInterceptor;
+
+	@Autowired
+	private Interceptor naverHttpInterceptor;
 
 	@Value("${api.kakao.url}")
 	private String kakaoApiUrl;
 
-	@Bean("jsonPlaceholderOkHttpClient")
-	public OkHttpClient jsonPlaceholderOkHttpClient() {
+	@Value("${api.naver.url}")
+	private String naverApiUrl;
+
+	@Bean("kakaoJsonOkHttpClient")
+	public OkHttpClient kakaoJsonOkHttpClient() {
 		return new OkHttpClient.Builder()
-				.addInterceptor(KakaoHttpInterceptor)
+				.addInterceptor(kakaoHttpInterceptor)
+				.build();
+	}
+
+	@Bean("naverJsonOkHttpClient")
+	public OkHttpClient naverJsonOkHttpClient() {
+		return new OkHttpClient.Builder()
+				.addInterceptor(naverHttpInterceptor)
 				.build();
 	}
 
@@ -42,7 +56,7 @@ public class RetrofitConfig {
 	@Bean("kakaoApiRetrofit")
 	public Retrofit kakaoApiRetrofit(
 			@Qualifier("jsonPlaceholderObjectMapper") ObjectMapper jsonPlaceholderObjectMapper,
-			@Qualifier("jsonPlaceholderOkHttpClient") OkHttpClient jsonPlaceholderOkHttpClient
+			@Qualifier("kakaoJsonOkHttpClient") OkHttpClient jsonPlaceholderOkHttpClient
 	) {
 		return new Retrofit.Builder()
 				.baseUrl(kakaoApiUrl)
@@ -51,8 +65,25 @@ public class RetrofitConfig {
 				.build();
 	}
 
+	@Bean("naverApiRetrofit")
+	public Retrofit naverApiRetrofit(
+			@Qualifier("jsonPlaceholderObjectMapper") ObjectMapper jsonPlaceholderObjectMapper,
+			@Qualifier("naverJsonOkHttpClient") OkHttpClient jsonPlaceholderOkHttpClient
+	) {
+		return new Retrofit.Builder()
+				.baseUrl(naverApiUrl)
+				.addConverterFactory(JacksonConverterFactory.create(jsonPlaceholderObjectMapper))
+				.client(jsonPlaceholderOkHttpClient)
+				.build();
+	}
+
 	@Bean("kakaoApiService")
-	public KakaoApiService jsonPlaceholderService(@Qualifier("kakaoApiRetrofit") Retrofit kakaoApiRetrofit) {
+	public KakaoApiService kakaoApiService(@Qualifier("kakaoApiRetrofit") Retrofit kakaoApiRetrofit) {
 		return kakaoApiRetrofit.create(KakaoApiService.class);
+	}
+
+	@Bean("naverApiService")
+	public NaverApiService naverApiService(@Qualifier("naverApiRetrofit") Retrofit naverApiRetrofit) {
+		return naverApiRetrofit.create(NaverApiService.class);
 	}
 }

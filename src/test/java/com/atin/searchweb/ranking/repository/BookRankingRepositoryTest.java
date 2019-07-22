@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+/*@RunWith(SpringRunner.class)
+@SpringBootTest*/
 public class BookRankingRepositoryTest {
 
 	/*@Autowired

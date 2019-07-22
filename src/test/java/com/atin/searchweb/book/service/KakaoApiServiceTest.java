@@ -1,6 +1,6 @@
 package com.atin.searchweb.book.service;
 
-import com.atin.searchweb.book.dto.BookDto;
+import com.atin.searchweb.book.dto.KakaoBooksDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class KakaoApiServiceTest {
 		String query = "미움받을 용기";
 
 		// when
-		Response<BookDto> book = kakaoApiService.getBooks(query, 1, 10).execute();
+		Response<KakaoBooksDto> book = kakaoApiService.getBooks(query, 1, 10).execute();
 
 		// then
 		assertTrue(book.isSuccessful());

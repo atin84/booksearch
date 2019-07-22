@@ -7,10 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -19,27 +17,27 @@ public class BookSearchHistoryService {
 
 	private final BookSearchHistoryRepository bookSearchHistoryRepository;
 
-	public Set<BookSearchValue> fetchBookSearchHistory(String id) {
+	public List<BookSearchValue> fetchBookSearchHistory(String id) {
 		Optional<BookSearchHistory> bookSearchHistoryOptional = bookSearchHistoryRepository.findById(id);
 
 		if (!bookSearchHistoryOptional.isPresent()) {
-			return Collections.emptySet();
+			return Collections.emptyList();
 		}
 		return bookSearchHistoryOptional.get().getBookSearchHistorySet();
 	}
 
 	public void addBookSearchHistory(String id, BookSearchValue bookSearchValue) {
-		Set<BookSearchValue> bookSearchValues;
+		List<BookSearchValue> bookSearchValueSet;
 
 		Optional<BookSearchHistory> bookSearchHistoryOptional = bookSearchHistoryRepository.findById(id);
 		if (bookSearchHistoryOptional.isPresent()) {
-			bookSearchValues = bookSearchHistoryOptional.get().getBookSearchHistorySet();
-			bookSearchValues.remove(bookSearchValue);
+			bookSearchValueSet = bookSearchHistoryOptional.get().getBookSearchHistorySet();
+			bookSearchValueSet.remove(bookSearchValue);
 		} else {
-			bookSearchValues = new LinkedHashSet<>();
+			bookSearchValueSet = new ArrayList<>();
 		}
 
-		bookSearchValues.add(bookSearchValue);
+		bookSearchValueSet.add(bookSearchValue);
 
 		BookSearchHistory bookSearchHistory;
 		if (bookSearchHistoryOptional.isPresent()) {
@@ -49,7 +47,7 @@ public class BookSearchHistoryService {
 			bookSearchHistory.setId(id);
 		}
 
-		bookSearchHistory.setBookSearchHistorySet(bookSearchValues);
+		bookSearchHistory.setBookSearchHistorySet(bookSearchValueSet.stream().sorted(Comparator.comparing(BookSearchValue::getSearchTime).reversed()).collect(Collectors.toList()));
 		bookSearchHistoryRepository.save(bookSearchHistory);
 	}
 

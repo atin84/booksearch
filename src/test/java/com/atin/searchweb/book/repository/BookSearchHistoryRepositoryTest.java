@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.TreeSet;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ public class BookSearchHistoryRepositoryTest {
 		//given
 		String id = "testid";
 		BookSearchHistory history = new BookSearchHistory();
-		history.setBookSearchHistorySet(Collections.emptySet());
+		history.setBookSearchHistorySet(Collections.emptyList());
 		history.setId(id);
 
 		//when

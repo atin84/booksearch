@@ -2,9 +2,9 @@ package com.atin.searchweb.ranking.service;
 
 import com.atin.searchweb.ranking.dto.BookRankingDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class BookRankingService {
 
-	public static final String KEY_BOOK_SEARCH_RANKING = "book_search_ranking";
+	@Value("${redis-key.ranking.search.book}")
+	private String bookSearchRankingKey;
 
 	private final RedisTemplate<String, String> redisTemplate;
 
@@ -28,12 +29,12 @@ public class BookRankingService {
 	}
 
 	public void incrementBookSearchScore(String keyword) {
-		zSetOperations.incrementScore(KEY_BOOK_SEARCH_RANKING, keyword, 1);
+		zSetOperations.incrementScore(bookSearchRankingKey, keyword, 1);
 	}
 
 	public List<BookRankingDto> getBookSearchRank() {
 		//zSetOperations.rank(KEY_BOOK_SEARCH_RANKING);
-		Set<ZSetOperations.TypedTuple<String>> rankingSet = zSetOperations.reverseRangeWithScores(KEY_BOOK_SEARCH_RANKING, 0, 10);
+		Set<ZSetOperations.TypedTuple<String>> rankingSet = zSetOperations.reverseRangeWithScores(bookSearchRankingKey, 0, 10);
 
 		return rankingSet.stream()
 				.map(item -> {
@@ -44,40 +45,6 @@ public class BookRankingService {
 				})
 				.collect(Collectors.toList());
 	}
-
-	/*public List<String> getPlayersRankOfRange(int startIndex, int endIndex) {
-		Set<String> rankReverseSet = zSetOperations.reverseRange(KEY_RANKING, startIndex, endIndex);
-		Iterator<String> iter = rankReverseSet.iterator();
-		List<String> list = new ArrayList<>(rankReverseSet.size());
-
-		while (iter.hasNext()) {
-			list.add(iter.next());
-		}
-
-		return list;
-	}
-
-	/*public PlayerRankModel getOnePlayerRank(String nickname) {
-		Long playerRank = zSetOperations.reverseRank(KEY_RANKING, nickname);
-
-		if (playerRank == null) {
-			throw new NotFoundException("Please check nickname");
-		}
-
-		PlayerRankModel playerRankModel = new PlayerRankModel();
-		playerRankModel.setNickname(nickname);
-		playerRankModel.setRank(playerRank.longValue() + 1);
-		playerRankModel.setScore(zSetOperations.score(KEY, nickname));
-
-		//zSetOperations.rank();
-
-		return playerRankModel;
-	}
-
-	public void updateLeaderBoard(String winner, double winnerScore, String loser, double loserScore) {
-		zSetOperations.add(KEY, winner, winnerScore);
-		zSetOperations.add(KEY, loser, loserScore);
-	}*/
 
 
 }

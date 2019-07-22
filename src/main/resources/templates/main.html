@@ -15,7 +15,7 @@
 				'Publisher : ' + d.publisher + '<br />' +
 				'Datetime : ' + d.datetime + '<br />' +
 				'Price : ' + d.price + '<br />' +
-				'Sale price : ' + d.sale_price;
+				'Sale price : ' + d.salePrice;
 		}
 
 		$(function () {
@@ -26,11 +26,8 @@
 				searching: {"regex": true},
 				ajax: {
 					url: "/api/v1/books",
-
 					dataSrc: function (json) {
 						json.iTotalDisplayRecords = json.totalElements;
-						//json.iTotalDisplayRecords = json.totalElements;
-						//json.iTotalRecords = json.totalPages;
 						return json.content;
 					}
 				},
@@ -44,11 +41,11 @@
 						data: "title"
 					},
 					{data: "isbn"},
-					{data: "datetime"}
+					{data: "price"}
 				]
 			});
 			var detailRows = [];
-			$('#example tbody').on('click', 'tr td.details-control', function () {
+			$('#book tbody').on('click', 'tr td.details-control', function () {
 				var tr = $(this).closest('tr');
 				var row = dt.row(tr);
 				var idx = $.inArray(tr.attr('id'), detailRows);
@@ -91,18 +88,11 @@
 <table id="book" class="display table table-striped table-bordered table-hover" style="width:100%">
     <thead>
     <tr>
-        <th>제목</th>
+        <th>title</th>
         <th>isbn</th>
-        <th>datetime</th>
+        <th>Price</th>
     </tr>
     </thead>
-    <tfoot>
-    <tr>
-        <th>제목</th>
-        <th>isbn</th>
-        <th>datetime</th>
-    </tr>
-    </tfoot>
 </table>
 
 </body>
