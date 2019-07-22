@@ -78,7 +78,7 @@ public class BookSearchService {
 
 		Response<NaverBooksDto> response;
 		try {
-			int start = bookSearchRequestDto.getPage() * bookSearchRequestDto.getSize() + 1;
+			int start = (bookSearchRequestDto.getPage() -1 ) * bookSearchRequestDto.getSize() + 1;
 			response = naverApiService.getBooks(bookSearchRequestDto.getTitle(), start, bookSearchRequestDto.getSize()).execute();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
