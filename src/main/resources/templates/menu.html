@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
->
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <script type="text/javascript" th:inline="javascript">
 		/* <![CDATA[ */
@@ -8,18 +7,37 @@
 			$("#btn-logout").click(function () {
 				$("#form-logout")[0].submit();
 			});
+
+			var url = window.location.href;
+			if (url.indexOf("main") > 0) {
+				$("#mainNav").addClass("active in");
+            } else if (url.indexOf("history") > 0) {
+				$("#historyNav").addClass("active in");
+			} else if (url.indexOf("ranking") > 0) {
+				$("#rankingNav").addClass("active in");
+			}
 		});
 		/* ]]> */
     </script>
 </head>
 
-<a href="/main" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;책 검색</a>
-&nbsp;|&nbsp;
-<a href="/history" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;내 검색 히스토리</a>
-&nbsp;|&nbsp;
-<a href="/ranking" class="btn btn-success"> <i class="fa fa-arrow-circle-o-left"></i>인기 키워드 목록</a>
-&nbsp;|&nbsp;
-<a href="#" class="btn btn-success" id="btn-logout"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Logout</a>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Search Web</a>
+    <ul class="navbar-nav">
+        <li class="nav-item" id="mainNav">
+            <a class="nav-link" href="/main">책 검색</a>
+        </li>
+        <li class="nav-item" id="historyNav">
+            <a class="nav-link" href="/history">내 검색 히스토리</a>
+        </li>
+        <li class="nav-item" id="rankingNav">
+            <a class="nav-link" href="/ranking">인기 키워드 목록</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" id="btn-logout">Logout</a>
+        </li>
+    </ul>
+</nav>
 
 <hr/>
 

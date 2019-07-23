@@ -1,7 +1,10 @@
 package com.atin.searchweb.book.service;
 
 import com.atin.searchweb.book.domain.BookSearchValue;
-import com.atin.searchweb.book.dto.*;
+import com.atin.searchweb.book.dto.BookDto;
+import com.atin.searchweb.book.dto.BookSearchRequestDto;
+import com.atin.searchweb.book.dto.KakaoBooksDto;
+import com.atin.searchweb.book.dto.NaverBooksDto;
 import com.atin.searchweb.ranking.service.BookRankingService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +81,7 @@ public class BookSearchService {
 
 		Response<NaverBooksDto> response;
 		try {
-			int start = (bookSearchRequestDto.getPage() -1 ) * bookSearchRequestDto.getSize() + 1;
+			int start = (bookSearchRequestDto.getPage() - 1) * bookSearchRequestDto.getSize() + 1;
 			response = naverApiService.getBooks(bookSearchRequestDto.getTitle(), start, bookSearchRequestDto.getSize()).execute();
 		} catch (IOException e) {
 			throw new RuntimeException(e);

@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Search Web</title>
+    <th:block th:include="header" />
 </head>
 <body>
 
-<h1>Search Web - </h1>
+<aside class="col-sm-4">
+    <p>Search Web Login</p>
+    <div class="card">
+        <article class="card-body">
+            <a href="/sign-up" class="float-right btn btn-outline-primary">Sign up</a>
+            <h4 class="card-title mb-4 mt-1">Sign in</h4>
+            <form th:action="@{/sign-in}" method="post">
+                <div class="form-group">
+                    <label>Your email</label>
+                    <input name="username" id="username" class="form-control" placeholder="id" type="text" th:value="${username}" />
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <label>Your password</label>
+                    <input name="password" id="password" class="form-control" placeholder="******" type="password">
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                </div> <!-- form-group// -->
+            </form>
+        </article>
+    </div> <!-- card.// -->
+</aside>
 
-<form th:action="@{/sign-in}" method="post">
-    name: <input type="text" name="username" id="username"
-                 th:value="${username}"/><br/>
-    p w: <input type="password" name="password" id="password"/><br/>
-    <div th:if="${logout}">You have been logged out successfully</div>
-    <input type="submit" value="sign in"/>
-</form>
-<a href="/sign-up">Sign-up</a>
+<br>
+<div th:if="${logout}" class="alert alert-info">You have been logged out successfully</div>
+<div th:if="${error}" th:text="${error}" class="alert alert-danger" />
+
 </body>
 </html>

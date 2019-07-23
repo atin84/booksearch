@@ -35,7 +35,7 @@ redis-key:
 
 api:
   kakao:
-    url: https://dapi.kakao.coma
+    url: https://dapi.kakao.com
     rest-api-key: KakaoAK bc2d447fd7692a927df6b0989ff2fe81
   naver:
     url: https://openapi.naver.com

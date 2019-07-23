@@ -1,26 +1,21 @@
 package com.atin.searchweb.book.controller;
 
 import com.atin.searchweb.book.dto.BookDto;
-import com.atin.searchweb.book.dto.KakaoBookDto;
-import com.atin.searchweb.book.dto.BookSearchValueDto;
 import com.atin.searchweb.book.dto.BookSearchRequestDto;
+import com.atin.searchweb.book.dto.BookSearchValueDto;
 import com.atin.searchweb.book.service.BookSearchHistoryService;
 import com.atin.searchweb.book.service.BookSearchService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping("/api/v1")
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class BookSearchController {
 

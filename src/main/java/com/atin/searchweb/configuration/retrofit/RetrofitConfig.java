@@ -1,4 +1,4 @@
-package com.atin.searchweb.configuration;
+package com.atin.searchweb.configuration.retrofit;
 
 import com.atin.searchweb.book.service.KakaoApiService;
 import com.atin.searchweb.book.service.NaverApiService;
