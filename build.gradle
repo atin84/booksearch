@@ -1,7 +1,11 @@
 apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group 'com.atin'
 version '1.0-SNAPSHOT'
+
+jar.enabled = true
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
@@ -14,7 +18,8 @@ repositories {
 
 def version = [
 		springboot: '2.1.6.RELEASE',
-		h2        : '1.4.197'
+		h2        : '1.4.197',
+		springcloud:'2.1.2.RELEASE'
 ]
 
 configurations {
@@ -35,12 +40,9 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: "${version.springboot}"
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "${version.springboot}"
 
-	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.1.2.RELEASE'
-	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix-dashboard', version: '2.1.2.RELEASE'
-	
-	developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "${version.springboot}"
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: "${version.springcloud}"
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix-dashboard', version: "${version.springcloud}"
 
-	// compile group: 'org.springframework.data', name: 'spring-data-redis', version: "${version.springboot}"
 	compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${version.springboot}"
 	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: "3.0.2.RELEASE"
 	
@@ -53,15 +55,13 @@ dependencies {
 
 	compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
 	compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
 
-	//
+	// webjars
 	compile 'org.webjars.bower:jquery:3.2.1'
 	compile 'org.webjars.bower:bootstrap:4.3.1'
 	compile group: 'org.webjars', name: 'datatables', version: '1.10.19'
 
-	//
-	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
-	
 	// DB and nosql
 	compile group: 'com.h2database', name: 'h2', version: "${version.h2}"
 	compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
@@ -75,4 +75,35 @@ dependencies {
 
 	// dev tool
 	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
+
+	developmentOnly group: 'org.springframework.boot', name: 'spring-boot-devtools', version: "${version.springboot}"
+}
+
+buildscript {
+	ext {
+		springBootVersion = '2.1.6.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("io.spring.gradle:dependency-management-plugin:0.5.1.RELEASE")
+	}
+}
+
+bootJar {
+	baseName = 'searchweb-kakaobank-atin'
+	version =  '1.0.0'
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'com.atin.searchweb.SearchWebApplication'
+	}
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
 }

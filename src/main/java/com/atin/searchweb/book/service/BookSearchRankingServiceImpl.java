@@ -1,6 +1,6 @@
-package com.atin.searchweb.ranking.service;
+package com.atin.searchweb.book.service;
 
-import com.atin.searchweb.ranking.dto.BookRankingDto;
+import com.atin.searchweb.book.dto.BookRankingDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class BookRankingService {
+public class BookSearchRankingServiceImpl implements BookSearchRankingService {
 
 	@Value("${redis-key.ranking.search.book}")
 	private String bookSearchRankingKey;
@@ -28,12 +28,13 @@ public class BookRankingService {
 		zSetOperations = redisTemplate.opsForZSet();
 	}
 
+	@Override
 	public void incrementBookSearchScore(String keyword) {
 		zSetOperations.incrementScore(bookSearchRankingKey, keyword, 1);
 	}
 
+	@Override
 	public List<BookRankingDto> getBookSearchRank() {
-		//zSetOperations.rank(KEY_BOOK_SEARCH_RANKING);
 		Set<ZSetOperations.TypedTuple<String>> rankingSet = zSetOperations.reverseRangeWithScores(bookSearchRankingKey, 0, 10);
 
 		return rankingSet.stream()

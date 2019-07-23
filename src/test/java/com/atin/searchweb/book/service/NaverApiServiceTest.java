@@ -1,6 +1,6 @@
 package com.atin.searchweb.book.service;
 
-import com.atin.searchweb.book.dto.KakaoBooksDto;
+import com.atin.searchweb.book.dto.NaverBooksDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,10 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class KakaoApiServiceTest {
+public class NaverApiServiceTest {
 
 	@Autowired
-	private KakaoBookApiService kakaoBookApiService;
+	private NaverBookApiService naverBookApiService;
 
 	@Test
 	public void getBooks___default___success() throws Exception {
@@ -23,7 +23,7 @@ public class KakaoApiServiceTest {
 		String query = "미움받을 용기";
 
 		// when
-		Response<KakaoBooksDto> book = kakaoBookApiService.getBooks(query, 1, 10).execute();
+		Response<NaverBooksDto> book = naverBookApiService.getBooks(query, 1, 10).execute();
 
 		// then
 		assertTrue(book.isSuccessful());

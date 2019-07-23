@@ -1,7 +1,7 @@
 package com.atin.searchweb.configuration.retrofit;
 
-import com.atin.searchweb.book.service.KakaoApiService;
-import com.atin.searchweb.book.service.NaverApiService;
+import com.atin.searchweb.book.service.KakaoBookApiService;
+import com.atin.searchweb.book.service.NaverBookApiService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -78,12 +78,12 @@ public class RetrofitConfig {
 	}
 
 	@Bean("kakaoApiService")
-	public KakaoApiService kakaoApiService(@Qualifier("kakaoApiRetrofit") Retrofit kakaoApiRetrofit) {
-		return kakaoApiRetrofit.create(KakaoApiService.class);
+	public KakaoBookApiService kakaoApiService(@Qualifier("kakaoApiRetrofit") Retrofit kakaoApiRetrofit) {
+		return kakaoApiRetrofit.create(KakaoBookApiService.class);
 	}
 
 	@Bean("naverApiService")
-	public NaverApiService naverApiService(@Qualifier("naverApiRetrofit") Retrofit naverApiRetrofit) {
-		return naverApiRetrofit.create(NaverApiService.class);
+	public NaverBookApiService naverApiService(@Qualifier("naverApiRetrofit") Retrofit naverApiRetrofit) {
+		return naverApiRetrofit.create(NaverBookApiService.class);
 	}
 }

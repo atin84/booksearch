@@ -1,4 +1,4 @@
-package com.atin.searchweb.ranking.dto;
+package com.atin.searchweb.book.dto;
 
 import lombok.Getter;
 import lombok.Setter;

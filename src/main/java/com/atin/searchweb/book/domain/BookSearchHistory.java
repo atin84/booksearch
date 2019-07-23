@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-import java.util.List;
+import java.util.LinkedList;
 
 @Setter
 @Getter
@@ -15,5 +15,5 @@ public class BookSearchHistory {
 	@Id
 	private String id;
 
-	private List<BookSearchValue> bookSearchHistorySet;
+	private LinkedList<BookSearchValue> bookSearchHistoryList;
 }

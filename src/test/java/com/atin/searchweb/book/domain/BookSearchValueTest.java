@@ -13,11 +13,6 @@ public class BookSearchValueTest {
 	private BookSearchValue testValue3 = BookSearchValue.builder().keyword("b").searchTime(LocalDateTime.now()).build();
 
 	@Test
-	public void compareTo() {
-
-	}
-
-	@Test
 	public void equals___default___success() {
 		assertTrue(testValue1.equals(testValue2));
 		assertFalse(testValue2.equals(testValue3));
