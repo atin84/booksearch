@@ -13,7 +13,7 @@
 				ajax: {
 					url: "/api/v1/histories",
 					dataSrc: function (json) {
-						return json;
+						return json.content;
 					}
 				},
 				columns: [

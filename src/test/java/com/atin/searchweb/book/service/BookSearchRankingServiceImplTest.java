@@ -48,6 +48,12 @@ public class BookSearchRankingServiceImplTest {
 		verify(zSetOperations, times(1)).incrementScore(anyString(), anyString(), anyDouble());
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void incrementBookSearchScore___empty_id___exception() {
+		// when
+		bookSearchRankingService.incrementBookSearchScore(" ");
+	}
+
 	@Test
 	public void getBookSearchRank___default___success() {
 		// given

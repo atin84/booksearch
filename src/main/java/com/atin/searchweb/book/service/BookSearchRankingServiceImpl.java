@@ -2,10 +2,12 @@ package com.atin.searchweb.book.service;
 
 import com.atin.searchweb.book.dto.BookRankingDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -30,6 +32,7 @@ public class BookSearchRankingServiceImpl implements BookSearchRankingService {
 
 	@Override
 	public void incrementBookSearchScore(String keyword) {
+		Assert.isTrue(StringUtils.isNotBlank(keyword), "keyword must not empty.");
 		zSetOperations.incrementScore(bookSearchRankingKey, keyword, 1);
 	}
 

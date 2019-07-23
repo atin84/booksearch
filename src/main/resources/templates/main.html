@@ -23,11 +23,15 @@
 				serverSide: true,
 				paging: true,
 				searching: {"regex": true},
+				deferLoading: 0,
 				ajax: {
 					url: "/api/v1/books",
 					dataSrc: function (json) {
-						json.iTotalDisplayRecords = json.totalElements;
-						return json.content;
+						json.iTotalDisplayRecords = json.content.totalElements;
+						return json.content.content;
+					},
+					error: function (xhr, error, thrown) {
+						alert( 'Error : ' +  xhr.responseText);
 					}
 				},
 				pageLength: 10,
@@ -81,7 +85,10 @@
 
 <th:block th:include="menu"></th:block>
 <hr/>
-책 검색 후 책 제목을 누르면 상세 정보를 볼 수 있습니다.
+
+<blockquote class="blockquote">
+    <p class="mb-0">오른쪽의 Search 입력창을 통해 책을 검색하세요. 책 검색 후 책 제목을 누르면 상세 정보를 볼 수 있습니다. </p>
+</blockquote>
 <hr/>
 
 <table id="book" class="display table table-striped table-bordered table-hover" style="width:100%">

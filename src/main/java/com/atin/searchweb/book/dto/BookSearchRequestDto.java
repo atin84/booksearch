@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class BookSearchRequestDto {
 
-	@NotBlank
 	private String title;
 
 	private int page;

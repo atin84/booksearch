@@ -11,9 +11,9 @@
 				ordering: false,
 				info: false,
 				ajax: {
-					url: "/api/v1/ranking",
+					url: "/api/v1/rankings",
 					dataSrc: function (json) {
-						return json;
+						return json.content;
 					}
 				},
 				columns: [

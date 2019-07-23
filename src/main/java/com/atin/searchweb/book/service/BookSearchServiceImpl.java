@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import retrofit2.Response;
 
 import java.io.IOException;
@@ -41,11 +42,6 @@ public class BookSearchServiceImpl implements BookSearchService {
 	@Override
 	@HystrixCommand(fallbackMethod = "getFallback")
 	public Page<BookDto> searchBooks(BookSearchRequestDto bookSearchRequestDto) {
-		Pageable pageable = new PageRequest(bookSearchRequestDto.getPage() - 1, bookSearchRequestDto.getSize());
-		if (StringUtils.isBlank(bookSearchRequestDto.getTitle())) {
-			return new PageImpl<>(Collections.emptyList(), pageable, 0);
-		}
-
 		Response<KakaoBooksDto> response;
 		try {
 			response = kakaoApiService.getBooks(bookSearchRequestDto.getTitle(), bookSearchRequestDto.getPage(), bookSearchRequestDto.getSize()).execute();
@@ -65,16 +61,12 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 		postProcess(bookSearchRequestDto);
 
+		Pageable pageable = PageRequest.of(bookSearchRequestDto.getPage() - 1, bookSearchRequestDto.getSize());
 		return new PageImpl<>(bookDtoList, pageable, response.body().getMeta().getPageableCount());
 	}
 
 	@SuppressWarnings("unused")
 	public Page<BookDto> getFallback(BookSearchRequestDto bookSearchRequestDto) {
-		Pageable pageable = new PageRequest(bookSearchRequestDto.getPage() - 1, bookSearchRequestDto.getSize());
-		if (StringUtils.isBlank(bookSearchRequestDto.getTitle())) {
-			return new PageImpl<>(Collections.emptyList(), pageable, 0);
-		}
-
 		Response<NaverBooksDto> response;
 		try {
 			int start = (bookSearchRequestDto.getPage() - 1) * bookSearchRequestDto.getSize() + 1;
@@ -95,6 +87,7 @@ public class BookSearchServiceImpl implements BookSearchService {
 
 		postProcess(bookSearchRequestDto);
 
+		Pageable pageable = PageRequest.of(bookSearchRequestDto.getPage() - 1, bookSearchRequestDto.getSize());
 		return new PageImpl<>(bookDtoList, pageable, response.body().getTotal());
 	}
 
