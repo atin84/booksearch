@@ -30,7 +30,7 @@ configurations {
 }
 
 dependencies {
-	
+	// spring
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: "${version.springboot}"
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: "${version.springboot}"
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: "${version.springboot}"
@@ -40,33 +40,31 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: "${version.springboot}"
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: "${version.springboot}"
 
+	// hystrix
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: "${version.springcloud}"
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix-dashboard', version: "${version.springcloud}"
 
-	compile group: 'org.springframework.session', name: 'spring-session-data-redis', version: "${version.springboot}"
-	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: "3.0.2.RELEASE"
-	
+	// common
 	compile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 
+	// retrofit api
 	compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.3.0'
 	compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.3.0'
 
+	// jackson
 	compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.3'
 
-	compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
-	compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+	// model mapper
 	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
 
 	// webjars
-	compile 'org.webjars.bower:jquery:3.2.1'
-	compile 'org.webjars.bower:bootstrap:4.3.1'
+	compile group: 'org.webjars.bower', name: 'jquery', version: '3.2.1'
+	compile group: 'org.webjars.bower', name: 'bootstrap', version: '4.3.1'
 	compile group: 'org.webjars', name: 'datatables', version: '1.10.19'
 
 	// DB and nosql
 	compile group: 'com.h2database', name: 'h2', version: "${version.h2}"
-	compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
-
-	// was
 	compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
 
 	// test

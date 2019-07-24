@@ -3,7 +3,6 @@ package com.atin.searchweb.book.service;
 import com.atin.searchweb.book.domain.BookSearchHistory;
 import com.atin.searchweb.book.domain.BookSearchValue;
 import com.atin.searchweb.book.repository.BookSearchHistoryRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,7 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;

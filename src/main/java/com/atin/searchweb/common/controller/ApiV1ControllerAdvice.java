@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+
 @Slf4j
 @RequestMapping("/api/v1/")
 @ControllerAdvice
@@ -14,7 +16,15 @@ public class ApiV1ControllerAdvice {
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public ResponseDto illegalArgumentException(IllegalArgumentException e) {
-		log.error(e.toString(), e);
+		log.warn(e.toString());
+		return ResponseDto.error(e.getMessage());
+	}
+
+	@ResponseBody
+	@ExceptionHandler(ConstraintViolationException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public ResponseDto constraintViolationException(ConstraintViolationException e) {
+		log.warn(e.toString());
 		return ResponseDto.error(e.getMessage());
 	}
 

@@ -18,7 +18,6 @@ import java.util.Arrays;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
