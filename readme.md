@@ -1,6 +1,9 @@
 # Procjet : Search Web
 - 
 
+## executable jar
+jar 다운로드 파일 주소 : https://github.com/atin84/booksearch/raw/master/searchweb-kakaobank-atin-1.0.jar
+
 ## 오픈 소스 사용 목적
 ### spring
 Spring Boot를 통해서 기본 Spring 설정을 자동화하여 사용한다.
